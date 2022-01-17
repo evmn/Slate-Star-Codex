@@ -1,0 +1,58 @@
+#!/usr/bin/env  python
+# encoding: utf-8
+
+import json
+import io, re, os
+from calibre.web.feeds.recipes import BasicNewsRecipe
+class Late_Post(BasicNewsRecipe):
+
+	title = 'Astral Codex Ten'
+	description = u""
+	remove_tags_before = dict(name='article', attrs={'class': "post"})
+	remove_tags_after= dict(name='article', attrs={'class': "post"})
+	remove_tags = [dict(attrs={'class':['post-end-cta-full', 'post-meta']})]
+	__author__ = 'evmn'
+	language = 'en'
+	encoding = 'utf-8'
+	timefmt = ''
+
+	publication_type = 'blog'
+	resolve_internal_links = True
+	no_stylesheets = False
+	remove_javascript = True
+	auto_cleanup = False
+	delay = 1
+	simultaneous_downloads = 20
+	oldest_article = 999
+	max_articles_per_feed = 999
+
+	def parse_index(self):
+		feeds = []
+		json_file = "/home/ubuntu/Documents/backup/github/evmn/slatestarcodex.com/Slate Star Codex/Astral Codex Ten/posts.json"
+		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)", re.IGNORECASE)
+		with io.open(json_file, u'r') as f:
+			data = json.load(f)
+			articles = []
+			old_year = '2022'
+			old_month = '01'
+			for post in data:
+				title = post['title']
+				audience = post['audience']
+				url = post['canonical_url']
+				post_date = post['post_date']
+				year = post_date[:4]
+				month = post_date[5:7]
+				description = post['description']
+				if audience == 'everyone' and not patterns.search(title):
+					if old_year == year and old_month == month:
+						articles.append({'title': title, 'url': url, 'description': description})
+					else:
+						feeds.append((old_year + "-" + old_month, reversed(articles)))
+						articles = []
+						articles.append({'title': title, 'url': url, 'description': description})
+						old_year = year
+						old_month = month
+	
+		for entry in feeds:
+				print(entry)
+		return reversed(feeds)
