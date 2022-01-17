@@ -1,0 +1,69 @@
+#!/usr/bin/env  python
+# encoding: utf-8
+
+import json
+import io
+import re
+from calibre.web.feeds.recipes import BasicNewsRecipe
+
+archives = "https://slatestarcodex.com/archives/"
+class Slate_Star_Codex(BasicNewsRecipe):
+
+	title = 'Slate Star Codex'
+	description = u"A blog about science, medicine, philosophy, politics, and futurism."
+	cover_url = 'http://127.0.0.1:8000/images/cover.jpg'
+	remove_tags_before = dict(name='div', attrs={'class': "status-publish"})
+	remove_tags_after= dict(name='div', attrs={'class': "status-publish"})
+	remove_tags = [dict(attrs={'class':['pjgm-postmeta', 'pjgm-postutility']})]
+	__author__ = 'evmn'
+	language = 'en'
+	encoding = 'utf-8'
+	timefmt = ''
+	preprocess_regexps = [
+		(re.compile(u' \| Slate Star Codex'), u""),
+	]
+
+	publication_type = 'blog'
+	resolve_internal_links = True
+	no_stylesheets = True
+	remove_javascript = True
+	auto_cleanup = False
+	delay = 1
+	simultaneous_downloads = 20
+	oldest_article = 999
+	max_articles_per_feed = 999
+
+	def parse_index(self):
+		soup = self.index_to_soup(archives)
+		sections = soup.find('div', class_='sya_container').findAll('ul')[1:]
+		year = 2013
+		feeds = []
+		classic_feeds = [
+                        {'title': "Top Posts", 'url': "https://slatestarcodex.com/top-posts/"},
+						{'title': "Archipelago And Atomic Communitarianism", 'url': "https://slatestarcodex.com/2014/06/07/archipelago-and-atomic-communitarianism/"},
+						{'title': "Beware The Man Of One Study", 'url': "https://slatestarcodex.com/2014/12/12/beware-the-man-of-one-study/"},
+						{'title': "Book Review: Albion’s Seed", 'url': "https://slatestarcodex.com/2016/04/27/book-review-albions-seed/"},
+						{'title': "Considerations On Cost Disease", 'url': "https://slatestarcodex.com/2017/02/09/considerations-on-cost-disease/"},
+						{'title': "I Can Tolerate Anything Except The Outgroup", 'url': "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/"},
+						{'title': "Meditations on Moloch", 'url': "https://slatestarcodex.com/2014/07/30/meditations-on-moloch/"},
+						{'title': "Nobody Is Perfect, Everything Is Commensurable", 'url': "https://slatestarcodex.com/2014/12/19/nobody-is-perfect-everything-is-commensurable/"},
+						{'title': "Studies On Slack", 'url': "https://slatestarcodex.com/2020/05/12/studies-on-slack/"},
+						{'title': "The Categories Were Made For Man, Not Man For The Categories", 'url': "https://slatestarcodex.com/2014/11/21/the-categories-were-made-for-man-not-man-for-the-categories/"},
+						{'title': "The Control Group Is Out Of Control", 'url': "https://slatestarcodex.com/2014/04/28/the-control-group-is-out-of-control/"},
+						{'title': "Toxoplasma of Rage", 'url': "https://slatestarcodex.com/2014/12/17/the-toxoplasma-of-rage/"},
+						#{'title': "", 'url': ""},
+						{'title': "Who By Very Slow Decay", 'url': "https://slatestarcodex.com/2013/07/17/who-by-very-slow-decay/"}
+						]
+		feeds.append(('Favorites', classic_feeds))
+		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)", re.IGNORECASE)
+		for section in reversed(sections):
+			articles = []
+			for post in reversed(section.findAll('a')):
+				title = post.getText()
+				url = post['href']
+				if not patterns.search(title):
+					articles.append({'title': title, 'url': url})
+					print(year, title, url)
+			feeds.append((str(year), articles))
+			year += 1
+		return feeds
