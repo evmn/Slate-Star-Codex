@@ -10,7 +10,11 @@ class Late_Post(BasicNewsRecipe):
 	description = u""
 	remove_tags_before = dict(name='article', attrs={'class': "post"})
 	remove_tags_after= dict(name='article', attrs={'class': "post"})
-	remove_tags = [dict(attrs={'class':['post-end-cta-full', 'post-meta']})]
+	remove_tags = [dict(attrs={'class':['post-end-cta-full', 'post-meta', 'share-dialog']})]
+	preprocess_regexps = [
+		(re.compile(u'<h3 class="subtitle">[^><]*?(</h3>)'), u""),
+		(re.compile(u'<p><strong>([^<]*?</)strong></p>'), u"<h3>\g<1>h3>")
+	]
 	__author__ = 'evmn'
 	language = 'en'
 	encoding = 'utf-8'
@@ -18,13 +22,14 @@ class Late_Post(BasicNewsRecipe):
 
 	publication_type = 'blog'
 	resolve_internal_links = True
-	no_stylesheets = False
+	no_stylesheets = True
 	remove_javascript = True
 	auto_cleanup = False
 	delay = 1
 	simultaneous_downloads = 20
 	oldest_article = 999
 	max_articles_per_feed = 999
+	extra_css = 'h1, h2, h3{text-align:center}'
 
 	def parse_index(self):
 		feeds = []
@@ -43,6 +48,8 @@ class Late_Post(BasicNewsRecipe):
 				year = post_date[:4]
 				month = post_date[5:7]
 				description = post['description']
+				if description == '...':
+					description = post_date
 				if audience == 'everyone' and not patterns.search(title):
 					if old_year == year and old_month == month:
 						articles.append({'title': title, 'url': url, 'description': description})
