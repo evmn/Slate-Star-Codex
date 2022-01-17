@@ -22,4 +22,4 @@ Vitalik Buterin曾在2019年**晚点 LatePost**的一个访谈[对话以太坊�
 ## Reference
 
  - [Slate Star Codex](https://slatestarcodex.com)
- - [Kindle 版电子书](https://t.me/master_thyself/330)
+ - [Kindle 版电子书](https://t.me/master_thyself/333)
