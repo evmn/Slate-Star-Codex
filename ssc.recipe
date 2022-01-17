@@ -11,7 +11,6 @@ class Slate_Star_Codex(BasicNewsRecipe):
 
 	title = 'Slate Star Codex'
 	description = u"A blog about science, medicine, philosophy, politics, and futurism."
-	cover_url = 'http://127.0.0.1:8000/images/cover.jpg'
 	remove_tags_before = dict(name='div', attrs={'class': "status-publish"})
 	remove_tags_after= dict(name='div', attrs={'class': "status-publish"})
 	remove_tags = [dict(attrs={'class':['pjgm-postmeta', 'pjgm-postutility']})]

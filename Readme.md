@@ -24,3 +24,4 @@ Vitalik Buterin曾在2019年**晚点 LatePost**的一个访谈[对话以太坊�
  - 博客 [Slate Star Codex](https://slatestarcodex.com)
  - Telegram [mobi格式](https://t.me/master_thyself/333)
  - 阿里云[mobi/epub格式](https://www.aliyundrive.com/s/GcpSbFY6i23)
+ - [Astral Codex Ten Podcast](https://linktr.ee/sscpodcast)
