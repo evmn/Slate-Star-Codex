@@ -13,13 +13,15 @@ class Slate_Star_Codex(BasicNewsRecipe):
 	description = u"A blog about science, medicine, philosophy, politics, and futurism."
 	remove_tags_before = dict(name='div', attrs={'class': "status-publish"})
 	remove_tags_after= dict(name='div', attrs={'class': "status-publish"})
-	remove_tags = [dict(attrs={'class':['pjgm-postmeta', 'pjgm-postutility']})]
+	remove_tags = [dict(attrs={'class':['pjgm-postutility']})]
 	__author__ = 'evmn'
 	language = 'en'
 	encoding = 'utf-8'
 	timefmt = ''
 	preprocess_regexps = [
 		(re.compile(u' \| Slate Star Codex'), u""),
+		(re.compile(u'<div class="pjgm-postmeta">.*?(<span class="entry-date">)([^<]*?</).*?(</div>)', re.DOTALL), u"<p align='right'>\g<2>p>"),
+		(re.compile(u'<p><b>([^<]*?</)b></p>'), u"<h3>\g<1>h3>")
 	]
 
 	publication_type = 'blog'
@@ -31,6 +33,7 @@ class Slate_Star_Codex(BasicNewsRecipe):
 	simultaneous_downloads = 20
 	oldest_article = 999
 	max_articles_per_feed = 999
+	extra_css = 'h1, h2, h3{text-align:center}'
 
 	def parse_index(self):
 		soup = self.index_to_soup(archives)
@@ -51,6 +54,7 @@ class Slate_Star_Codex(BasicNewsRecipe):
 						{'title': "The Control Group Is Out Of Control", 'url': "https://slatestarcodex.com/2014/04/28/the-control-group-is-out-of-control/"},
 						{'title': "Toxoplasma of Rage", 'url': "https://slatestarcodex.com/2014/12/17/the-toxoplasma-of-rage/"},
 						#{'title': "", 'url': ""},
+						{'title': "Untitled", 'url': "https://slatestarcodex.com/2015/01/01/untitled/"},
 						{'title': "Who By Very Slow Decay", 'url': "https://slatestarcodex.com/2013/07/17/who-by-very-slow-decay/"}
 						]
 		feeds.append(('Favorites', classic_feeds))
