@@ -58,7 +58,7 @@ class Slate_Star_Codex(BasicNewsRecipe):
 						{'title': "Who By Very Slow Decay", 'url': "https://slatestarcodex.com/2013/07/17/who-by-very-slow-decay/"}
 						]
 		feeds.append(('Favorites', classic_feeds))
-		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)", re.IGNORECASE)
+		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)|(SSC)", re.IGNORECASE)
 		for section in reversed(sections):
 			articles = []
 			for post in reversed(section.findAll('a')):
