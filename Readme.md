@@ -1,27 +1,47 @@
 # Slate Star Codex
 
-Vitalik Buterin曾在2019年**晚点 LatePost**的一个访谈[对话以太坊创始人V神](https://www.latepost.com/news/dj_detail?id=119)中高度赞扬这个博客，他说：***最近读的一个博客—Slate star CodeX，信息量很大，像读了5本书的感觉。***
+Vitalik Buterin, the creater of Ethereum, highly praised **Slate Star Codex** in a 2019 dialogue with **Late Post**, he said "I've read a blog recently, Slate Star Codex, it feels like 5 books, a lot of information".
 
-我发现在Twitter上，除了Vitalik Buterin之外，Paul Graham和Elon Musk也关注了博客的作者[Scott Alexander](https://twitter.com/slatestarcodex)。
+In addition to Vitalik Buterin, Pual Graham and Elon Musk are also following the author of this blog—[Scott Alexander](https://twitter.com/slatestarcodex) on Twitter.
 
-我只看了两篇长文(**TL;DR**)，考虑到这些年人们常谈到“内卷”和"躺平"，我感觉很多人应该都对这两篇文章感兴趣。
+I've read two posts(**TL;DR**) about competition, I think a lot of people will be interested.
 
  - [Meditations On Moloch](https://slatestarcodex.com/2014/07/30/meditations-on-moloch/)
  - [Studies On Slack](https://slatestarcodex.com/2020/05/12/studies-on-slack/)
 
-引用**Studies On Slack**中的一句话，“在密教中，完全竞争被称为 Moloch，完全没有竞争被称为 Slack”。
+I will quote a line from **Studies On Slack** to explain the difference from *Moloch* and *Slack*:
 
 >In the esoteric teachings, total competition is called Moloch, and total absence of competition is called Slack.
 
-整个博客有超过1500篇文章，我在制作电子书时，使用正则表达式过滤了标题中包含`Open Thread #`和`Links for #date#`之类的文章，剩余的900多篇文章全部收录在内。制作电子书用时90分钟。
+There are over 1500 blogs in the archives，I've filtered out a lot with the following regex.
 
-![](images/cover.jpg)
-![](images/screenshot_1.jpg)
-![](images/screenshot_2.jpg)
+```py
+patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)|(SSC)", re.IGNORECASE)
+```
+
+## Astral Codex Ten
+
+The author start a new blog in substack with a new name [Astral Codex Ten](https://astralcodexten.substack.com/) after a conflict with NYT in 2020.
+
+## Gallerys
+
+<p align="middle">
+<img src="Slate Star Codex/images/cover2.jpg"  width=45% />
+<img src="Astral Codex Ten/images/cover.jpg"  width=45% />
+</p>
+<p align="middle">
+<img src="Astral Codex Ten/images/screenshot_1.jpg"  width=45% />
+<img src="Slate Star Codex/images/screenshot_1.jpg"  width=45% />
+<img src="Slate Star Codex/images/screenshot_3.jpg"  width=45% />
+</p>
 
 ## Reference
 
- - 博客 [Slate Star Codex](https://slatestarcodex.com)
- - Telegram [mobi格式](https://t.me/master_thyself/333)
- - 阿里云[mobi/epub格式](https://www.aliyundrive.com/s/GcpSbFY6i23)
+ - [Slate Star Codex](https://slatestarcodex.com)
+ - [Astral Codex Ten](https://astralcodexten.substack.com/)
+ - LatePost [对话以太坊创始人V神](https://www.latepost.com/news/dj_detail?id=119)
+ - [Dialogue Vitalik: Most people are stuck in the system, and I live outside the system](https://blocking.net/11290/dialogue-vitalik-most-people-are-stuck-in-the-system-and-i-live-outside-the-system/)
+ - Telegram mobi[Slate Star Codex](https://t.me/master_thyself/333)
+ - Telegram mobi[Astral Codex Ten](https://t.me/master_thyself/335)
+ - 阿里云mobi/epub[Slate Star Codex](https://www.aliyundrive.com/s/GcpSbFY6i23)
  - [Astral Codex Ten Podcast](https://linktr.ee/sscpodcast)
