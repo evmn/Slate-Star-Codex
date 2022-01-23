@@ -2,7 +2,7 @@
 # encoding: utf-8
 
 import json
-import io, re, os
+import io, re
 from calibre.web.feeds.recipes import BasicNewsRecipe
 class Late_Post(BasicNewsRecipe):
 
@@ -33,7 +33,7 @@ class Late_Post(BasicNewsRecipe):
 
 	def parse_index(self):
 		feeds = []
-		json_file = "/home/ubuntu/Documents/backup/github/evmn/slatestarcodex.com/Slate Star Codex/Astral Codex Ten/posts.json"
+		json_file = "/tmp/posts.json"
 		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)", re.IGNORECASE)
 		with io.open(json_file, u'r') as f:
 			data = json.load(f)
@@ -49,16 +49,14 @@ class Late_Post(BasicNewsRecipe):
 				month = post_date[5:7]
 				description = post['description']
 				if description == '...':
-					description = post_date
+					description = ""
 				if audience == 'everyone' and not patterns.search(title):
-					if old_year == year and old_month == month:
-						articles.append({'title': title, 'url': url, 'description': description})
-					else:
+					if old_year != year or old_month != month:
 						feeds.append((old_year + "-" + old_month, reversed(articles)))
 						articles = []
-						articles.append({'title': title, 'url': url, 'description': description})
 						old_year = year
 						old_month = month
+					articles.append({'title': title, 'url': url, 'date': post_date[:9], 'description': description})
 	
 		for entry in feeds:
 				print(entry)
