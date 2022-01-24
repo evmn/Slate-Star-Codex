@@ -38,6 +38,9 @@ class Slate_Star_Codex(BasicNewsRecipe):
 		sections = soup.find('div', class_='sya_container').findAll('ul')[1:]
 		year = 2013
 		feeds = []
+		series_feed = []
+		book_review_feed = []
+		archives_feeds = []
 		classic_feeds = [
 				 		{'title': "Top Posts", 'url': "https://slatestarcodex.com/top-posts/"},
 						{'title': "Archipelago And Atomic Communitarianism", 'url': "https://slatestarcodex.com/2014/06/07/archipelago-and-atomic-communitarianism/"},
@@ -55,17 +58,28 @@ class Slate_Star_Codex(BasicNewsRecipe):
 						{'title': "Untitled", 'url': "https://slatestarcodex.com/2015/01/01/untitled/"},
 						{'title': "Who By Very Slow Decay", 'url': "https://slatestarcodex.com/2013/07/17/who-by-very-slow-decay/"}
 						]
-		feeds.append(('Favorites', classic_feeds))
-		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)|(SSC)", re.IGNORECASE)
+		feeds.append(('Classic', classic_feeds))
+		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)|(SSC)|(Meetup)|(Thread\s*\d+)|(Contest)|(\d+ Predictions)|(Predictions for)", re.IGNORECASE)
+		series_patterns = re.compile("∞", re.IGNORECASE)
+		book_review_patterns = re.compile("Book.*Review:", re.IGNORECASE)
 		for section in reversed(sections):
 			articles = []
 			for post in reversed(section.findAll('a')):
 				title = post.getText()
 				url = post['href']
 				date = "-".join(url.strip('/').split('/')[-4:-1])
+				if book_review_patterns.match(title):
+					book_review_feed.append({'title': title.replace("Book Review: ", ""), 'url': url, 'date': date})
+					continue
+				if series_patterns.search(title):
+					series_feed.append({'title': title, 'url': url, 'date': date})
+					continue
 				if not patterns.search(title):
 					articles.append({'title': title, 'url': url, 'date': date})
 					print(date, title, url)
-			feeds.append((str(year), articles))
+			archives_feeds.append((str(year), articles))
 			year += 1
+		feeds.append(("Book Review", book_review_feed))
+		feeds.append(("Series", series_feed))
+		feeds.extend(archives_feeds)
 		return feeds
