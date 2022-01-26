@@ -39,13 +39,13 @@ class Slate_Star_Codex(BasicNewsRecipe):
 		year = 2013
 		feeds = []
 		series_feed = []
+		acc_feed = []
 		book_review_feed = []
 		archives_feeds = []
 		classic_feeds = [
 				 		{'title': "Top Posts", 'url': "https://slatestarcodex.com/top-posts/"},
 						{'title': "Archipelago And Atomic Communitarianism", 'url': "https://slatestarcodex.com/2014/06/07/archipelago-and-atomic-communitarianism/"},
 						{'title': "Beware The Man Of One Study", 'url': "https://slatestarcodex.com/2014/12/12/beware-the-man-of-one-study/"},
-						{'title': "Book Review: Albion’s Seed", 'url': "https://slatestarcodex.com/2016/04/27/book-review-albions-seed/"},
 						{'title': "Considerations On Cost Disease", 'url': "https://slatestarcodex.com/2017/02/09/considerations-on-cost-disease/"},
 						{'title': "I Can Tolerate Anything Except The Outgroup", 'url': "https://slatestarcodex.com/2014/09/30/i-can-tolerate-anything-except-the-outgroup/"},
 						{'title': "Meditations on Moloch", 'url': "https://slatestarcodex.com/2014/07/30/meditations-on-moloch/"},
@@ -59,8 +59,9 @@ class Slate_Star_Codex(BasicNewsRecipe):
 						{'title': "Who By Very Slow Decay", 'url': "https://slatestarcodex.com/2013/07/17/who-by-very-slow-decay/"}
 						]
 		feeds.append(('Classic', classic_feeds))
-		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\d+)|(SSC)|(Meetup)|(Thread\s*\d+)|(Contest)|(\d+ Predictions)|(Predictions for)", re.IGNORECASE)
-		series_patterns = re.compile("∞", re.IGNORECASE)
+		patterns = re.compile("(Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\s*\d+)|(SSC)|(Meetup)|(Thread\s*\d+)|(Contest)|(\d+ Predictions)|(Predictions for)|(Hidden Test Post)|(Take.*Survey)|(Adversarial Collaboration)|(Vote for)", re.IGNORECASE)
+		series_patterns = re.compile("(∞)|(Raikoth)")
+		acc_patterns = re.compile("(\[ACC)|(Adversarial Collaboration Contest)")
 		book_review_patterns = re.compile("Book.*Review:", re.IGNORECASE)
 		for section in reversed(sections):
 			articles = []
@@ -74,6 +75,9 @@ class Slate_Star_Codex(BasicNewsRecipe):
 				if series_patterns.search(title):
 					series_feed.append({'title': title, 'url': url, 'date': date})
 					continue
+				if acc_patterns.search(title):
+					acc_feed.append({'title': title.replace("ACC Entry", "ACC"), 'url': url, 'date': date})
+					continue
 				if not patterns.search(title):
 					articles.append({'title': title, 'url': url, 'date': date})
 					print(date, title, url)
@@ -81,5 +85,6 @@ class Slate_Star_Codex(BasicNewsRecipe):
 			year += 1
 		feeds.append(("Book Review", book_review_feed))
 		feeds.append(("Series", series_feed))
+		feeds.append(("Adversarial Collaboration Contest", acc_feed))
 		feeds.extend(archives_feeds)
 		return feeds
