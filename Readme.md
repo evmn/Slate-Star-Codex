@@ -31,10 +31,10 @@ cd Slate-Star-Codex
 # enter the folder for one of the blogs
 cd Astral\ Codex\ Ten/
 
-# do a test run: this should download 4 articles into an epub. Check the epub works
+# do a test run: this should download 4 articles into an ebook. Check the ebook works
 ./ebooks.sh test
 
-# do a full run: this will download all articles and build the epub for the whole blog
+# do a full run: this will download all articles and build the ebook for the whole blog
 ./ebook.sh
 ```
 
