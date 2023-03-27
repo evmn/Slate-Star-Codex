@@ -19,6 +19,25 @@ There are over 1500 blogs in the archives，I've filtered out a lot with the fol
 (Links for)|(Links\s*\d+\/\d+)|(Open Thread)|(OT\s*\d+)|(SSC)|(Meetup)|(Thread\s*\d+)|(Contest)|(\d+ Predictions)|(Predictions for)|(Hidden Test Post)|(Take.*Survey)|(Adversarial Collaboration)|(Vote for)
 ```
 
+## How to use
+
+To download the blogs and build the ebooks, you can
+
+```bash
+# clone the repo
+git clone https://github.com/evmn/Slate-Star-Codex.git
+cd Slate-Star-Codex
+
+# enter the folder for one of the blogs
+cd Astral\ Codex\ Ten/
+
+# do a test run: this should download 4 articles into an ebook. Check the ebook works
+./ebooks.sh test
+
+# do a full run: this will download all articles and build the ebook for the whole blog
+./ebook.sh
+```
+
 ## Astral Codex Ten
 
 The author start a new blog in substack with a new name [Astral Codex Ten](https://astralcodexten.substack.com/) after a conflict with NYT in 2020.
